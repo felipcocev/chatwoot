@@ -84,6 +84,12 @@ Rails.application.routes.draw do
               get :search
               post :filter
             end
+            resources :conversations, only: [:index, :create, :show, :update, :destroy] do
+  collection do
+    get :meta
+    get :search
+    post :filter
+  end
             scope module: :conversations do
               resources :messages, only: [:index, :create, :destroy] do
                 member do
