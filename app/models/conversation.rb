@@ -289,7 +289,6 @@ class Conversation < ApplicationRecord
 
   def conversation_status_changed_to_open?
     return false unless open?
-    # saved_change_to_status? method only works in case of update
     return true if previous_changes.key?(:id) || saved_change_to_status?
   end
 
@@ -311,7 +310,6 @@ class Conversation < ApplicationRecord
     self['additional_attributes']['referer'] = nil unless url_valid?(additional_attributes['referer'])
   end
 
-  # creating db triggers
   trigger.before(:insert).for_each(:row) do
     "NEW.display_id := nextval('conv_dpid_seq_' || NEW.account_id);"
   end
