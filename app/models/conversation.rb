@@ -63,6 +63,7 @@ class Conversation < ApplicationRecord
   validates :inbox_id, presence: true
   validates :contact_id, presence: true
   before_validation :validate_additional_attributes
+  after_create_commit :create_kanban_card
   validates :additional_attributes, jsonb_attributes_length: true
   validates :custom_attributes, jsonb_attributes_length: true
   validates :uuid, uniqueness: true
@@ -104,6 +105,7 @@ end
   belongs_to :team, optional: true
   belongs_to :campaign, optional: true
 
+  has_one :kanban_card, dependent: :destroy
   has_many :mentions, dependent: :destroy_async
   has_many :messages, dependent: :destroy_async, autosave: true
   has_one :csat_survey_response, dependent: :destroy_async
