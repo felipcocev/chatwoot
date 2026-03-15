@@ -63,7 +63,6 @@ class Conversation < ApplicationRecord
   validates :inbox_id, presence: true
   validates :contact_id, presence: true
   before_validation :validate_additional_attributes
-  after_create_commit :create_kanban_card
   validates :additional_attributes, jsonb_attributes_length: true
   validates :custom_attributes, jsonb_attributes_length: true
   validates :uuid, uniqueness: true
@@ -81,11 +80,6 @@ class Conversation < ApplicationRecord
 
     open.where('last_activity_at < ? ', Time.now.utc - auto_resolve_duration.days)
   }
-  
-
-
-private
-
   scope :last_user_message_at, lambda {
     joins(
       "INNER JOIN (#{last_messaged_conversations.to_sql}) AS grouped_conversations
@@ -115,6 +109,7 @@ private
 
   after_update_commit :execute_after_update_commit_callbacks
   after_create_commit :notify_conversation_creation
+  after_create_commit :create_kanban_card
   after_commit :set_display_id, unless: :display_id?
 
   delegate :auto_resolve_duration, to: :account
@@ -214,9 +209,10 @@ private
   end
 
   private
-def create_kanban_card
-  Kanban::SyncConversationCardService.call(self)
-end
+
+  def create_kanban_card
+    Kanban::SyncConversationCardService.call(self)
+  end
 
   def execute_after_update_commit_callbacks
     notify_status_change
