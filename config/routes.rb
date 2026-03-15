@@ -78,12 +78,7 @@ Rails.application.routes.draw do
           namespace :channels do
             resource :twilio_channel, only: [:create]
           end
-          resources :conversations, only: [:index, :create, :show] do
-            collection do
-              get :meta
-              get :search
-              post :filter
-            end
+          
             resources :conversations, only: [:index, :create, :show, :update, :destroy] do
   collection do
     get :meta
@@ -115,10 +110,11 @@ Rails.application.routes.draw do
               get :attachments
             end
           end
-
           resource :kanban, only: [:show], controller: 'kanban' do
   patch 'cards/:id/move', action: :move_card, on: :collection
 end
+
+          
           
           resources :search, only: [:index] do
             collection do
