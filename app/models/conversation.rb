@@ -81,15 +81,11 @@ class Conversation < ApplicationRecord
 
     open.where('last_activity_at < ? ', Time.now.utc - auto_resolve_duration.days)
   }
-  has_one :kanban_card, dependent: :destroy
+  
 
-after_create_commit :create_kanban_card
 
 private
 
-def create_kanban_card
-  Kanban::SyncConversationCardService.call(self)
-end
   scope :last_user_message_at, lambda {
     joins(
       "INNER JOIN (#{last_messaged_conversations.to_sql}) AS grouped_conversations
@@ -218,6 +214,9 @@ end
   end
 
   private
+def create_kanban_card
+  Kanban::SyncConversationCardService.call(self)
+end
 
   def execute_after_update_commit_callbacks
     notify_status_change
