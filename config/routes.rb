@@ -116,6 +116,10 @@ Rails.application.routes.draw do
             end
           end
 
+          resource :kanban, only: [:show], controller: 'kanban' do
+  patch 'cards/:id/move', action: :move_card, on: :collection
+end
+          
           resources :search, only: [:index] do
             collection do
               get :conversations
