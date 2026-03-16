@@ -11,7 +11,7 @@ const CONVERSATION_PERMISSIONS = [
 
 export const routes = [
   {
-    path: frontendURL('accounts/:accountId/kanban'),
+    path: 'kanban',
     name: 'kanban_dashboard',
     meta: {
       permissions: CONVERSATION_PERMISSIONS,
