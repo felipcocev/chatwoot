@@ -33,10 +33,5 @@ export default {
       roles: ['administrator', 'agent'],
       component: Suspended,
     },
-    {
-      path: '/accounts/:accountId/kanban',
-      name: 'kanban_dashboard',
-      component: () => import('../views/kanban/Index.vue'),
-    },
   ],
 };
