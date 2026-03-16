@@ -1,5 +1,5 @@
 import { frontendURL } from '../../../helper/URLHelper';
-import KanbanIndex from './Index.vue';
+import KanbanIndex from '../../../views/kanban/Index.vue';
 
 const CONVERSATION_PERMISSIONS = [
   'administrator',
