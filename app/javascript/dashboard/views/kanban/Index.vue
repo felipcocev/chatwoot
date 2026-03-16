@@ -9,3 +9,9 @@ export default {
   name: 'KanbanIndex'
 }
 </script>
+
+<style scoped>
+.kanban-page {
+  padding: 20px;
+}
+</style>
