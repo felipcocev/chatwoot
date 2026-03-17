@@ -2,8 +2,9 @@ import KanbanIndex from '../../../views/kanban/Index.vue';
 
 export const routes = [
   {
-    path: 'kanban-board-interno-teste-987',
+    path: 'kanban',
     name: 'kanban_dashboard',
+    roles: ['administrator', 'agent'],
     component: KanbanIndex,
   },
 ];
