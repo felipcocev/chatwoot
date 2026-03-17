@@ -18,13 +18,13 @@ export default {
       path: frontendURL('accounts/:account_id'),
       component: AppContainer,
       children: [
+        ...kanbanRoutes,
         ...inboxRoutes,
         ...conversation.routes,
         ...settings.routes,
         ...contactRoutes,
         ...searchRoutes,
         ...notificationRoutes,
-        ...kanbanRoutes,
       ],
     },
     {
